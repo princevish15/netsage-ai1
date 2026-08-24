@@ -1,0 +1,32 @@
+{
+  "system_name": "NetSage AI",
+  "version": "2.4.0",
+  "environment": "Cisco IOS / Packet Tracer Hybrid",
+  "model_config": {
+    "primary_model": "gemini-1.5-pro",
+    "fallback_model": "gemini-1.5-flash",
+    "temperature": 0.1,
+    "confidence_threshold": 0.85
+  },
+  "execution_params": {
+    "deterministic_first": true,
+    "hitl_mandatory": true,
+    "auto_rollback_on_failure": true,
+    "max_remediation_retries": 3,
+    "log_audit_trail": true
+  },
+  "supported_layers": [
+    "Layer 2",
+    "Layer 2/3",
+    "Layer 3",
+    "Layer 3/4",
+    "Layer 4",
+    "Layer 7"
+  ],
+  "severity_levels": [
+    "Low",
+    "Medium",
+    "High",
+    "Critical"
+  ]
+}
