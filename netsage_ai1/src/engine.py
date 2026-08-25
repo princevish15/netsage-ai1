@@ -1,7 +1,4 @@
-"""
-NetSage AI: Diagnostic Core Engine (engine.py)
-Orchestrates deterministic rule verification and AI diagnostic synthesis.
-"""
+
 
 import json
 from pathlib import Path
@@ -12,10 +9,7 @@ from src.checker import DeterministicChecker
 
 
 class DiagnosticEngine:
-    """
-    Main diagnostic engine that coordinates rule matching,
-    prompt generation, and structured remediation packaging.
-    """
+  
 
     def __init__(self, config_path: Optional[str] = None):
         self.checker = DeterministicChecker()
@@ -36,9 +30,7 @@ class DiagnosticEngine:
         return default_config
 
     def diagnose_case(self, case_row: pd.Series) -> Dict[str, Any]:
-        """
-        Runs comprehensive diagnosis on a given scenario from cases.csv.
-        """
+        
         show_outputs = str(case_row.get("show_outputs", ""))
         expected_fault = str(case_row.get("expected_fault", ""))
         topology_note = str(case_row.get("topology_note", ""))
@@ -47,10 +39,10 @@ class DiagnosticEngine:
         severity = str(case_row.get("severity", "Medium"))
         symptom = str(case_row.get("symptom", ""))
 
-        # 1. Deterministic Rule Matching
+     
         eval_result = self.checker.evaluate(show_outputs, expected_fault, topology_note)
         
-        # 2. Enrich with exact domain knowledge
+    
         clean_fix_steps = self._generate_exact_fix_steps(case_id, expected_fault, show_outputs, topology_note)
         
         diagnostic_payload = {
