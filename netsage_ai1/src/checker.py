@@ -1,17 +1,10 @@
-"""
-NetSage AI: Deterministic Rule Verification Engine (checker.py)
-Implements static pattern matching and rule validation on Cisco IOS command outputs.
-"""
 
 import re
 from typing import Dict, Any, Optional
 
 
 class DeterministicChecker:
-    """
-    Scans show_outputs and topology data for known network faults,
-    misconfigurations, syntax errors, and state discrepancies.
-    """
+    
 
     def __init__(self):
         self.rules = [
@@ -122,19 +115,16 @@ class DeterministicChecker:
         ]
 
     def evaluate(self, show_outputs: str, expected_fault: str = "", topology_note: str = "") -> Dict[str, Any]:
-        """
-        Executes rule evaluation against CLI outputs and topology notes.
-        Returns a structured diagnostic assessment dictionary.
-        """
+       
         text_corpus = f"{show_outputs} {expected_fault} {topology_note}"
         
         for rule in self.rules:
             if re.search(rule["pattern"], text_corpus, re.IGNORECASE):
-                # Extract target interface if present
+                
                 intf_match = re.search(r'(GigabitEthernet\S*|FastEthernet\S*|Serial\S*|Fa\d+/\d+|Gi\d+/\d+(\.\d+)?)', text_corpus, re.IGNORECASE)
                 target_intf = intf_match.group(1) if intf_match else "GigabitEthernet0/0"
                 
-                # Format fix commands
+            
                 fixes = [
                     cmd.replace("{target_intf}", target_intf)
                        .replace("{sub_intf}", target_intf)
@@ -161,7 +151,7 @@ class DeterministicChecker:
                     "is_deterministic": True
                 }
 
-        # Fallback if no specific regex matches
+ 
         return {
             "rule_matched": "GENERIC_HEURISTIC",
             "status": "ANOMALY_FLAGGED",
