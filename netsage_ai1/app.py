@@ -10,7 +10,7 @@ from pathlib import Path
 import datetime
 import io
 
-# Optional Plotly for analytics
+
 try:
     import plotly.express as px
     import plotly.graph_objects as go
@@ -18,11 +18,11 @@ try:
 except ImportError:
     HAS_PLOTLY = False
 
-# Import Core Engine
+
 from src.engine import DiagnosticEngine
 from src.checker import DeterministicChecker
 
-# --- PAGE CONFIGURATION ---
+
 st.set_page_config(
     page_title="NetSage AI - Automated Network Diagnostic Platform",
     page_icon="🌐",
@@ -30,7 +30,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- MODERN ENTERPRISE CSS ---
+
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -181,7 +181,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# --- DATASET & ENGINE LOADER ---
+
 @st.cache_data
 def load_dataset():
     candidates = [
@@ -208,7 +208,7 @@ def get_diagnostic_engine():
 df_cases = load_dataset()
 engine = get_diagnostic_engine()
 
-# Initialize Session State
+
 if "audit_history" not in st.session_state:
     st.session_state.audit_history = [
         {
@@ -241,7 +241,7 @@ if "audit_history" not in st.session_state:
     ]
 
 
-# --- SIDEBAR CONFIGURATION ---
+
 with st.sidebar:
     st.image("https://img.icons8.com/fluency/96/network-switch.png", width=64)
     st.title("NetSage AI")
@@ -278,7 +278,7 @@ with st.sidebar:
     st.info("**Safety Enforcement**: AI proposed CLI configuration commands are locked behind human approval before deployment.")
 
 
-# --- MAIN HEADER (FRONT INTERFACE INTRO PARAGRAPH) ---
+
 st.markdown("""
 <div class="hero-banner">
     <div class="hero-title">🌐 NetSage AI: Automated Network Diagnostic Platform</div>
@@ -289,7 +289,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# --- 3 VERTICAL LINES / POINTS (CASES.CSV FEATURES) ---
+
 st.markdown("### 📋 Core Diagnostic Dataset Capabilities (`cases.csv`)")
 st.markdown("""
 <div class="vertical-feature-card">
@@ -317,7 +317,7 @@ st.markdown("""
 st.markdown("<br>", unsafe_allow_html=True)
 
 
-# --- FILTER DATASET ---
+
 filtered_df = df_cases.copy()
 if selected_layer != "All Layers" and not filtered_df.empty:
     filtered_df = filtered_df[filtered_df["osi_layer"] == selected_layer]
@@ -325,9 +325,7 @@ if selected_severity != "All Severities" and not filtered_df.empty:
     filtered_df = filtered_df[filtered_df["severity"] == selected_severity]
 
 
-# ==========================================
-# TAB 1: DIAGNOSTIC WORKSPACE
-# ==========================================
+
 if app_mode == "🔬 Diagnostic Workspace":
     st.subheader("🔬 Interactive Diagnostic & HITL Deployment Workspace")
     
@@ -449,9 +447,7 @@ if app_mode == "🔬 Diagnostic Workspace":
                     st.error("❌ Diagnosis rejected and recorded in model audit log.")
 
 
-# ==========================================
-# TAB 2: LIVE CUSTOM CLI DIAGNOSIS
-# ==========================================
+
 elif app_mode == "🧪 Live Custom CLI Diagnosis":
     st.subheader("🧪 Live Custom Cisco CLI Diagnostic Sandbox")
     st.markdown("Paste custom CLI show command outputs or select a quick-load preset to run NetSage AI's real-time diagnostic engine:")
@@ -497,9 +493,7 @@ elif app_mode == "🧪 Live Custom CLI Diagnosis":
         st.code("\n".join(result["fix_steps"]), language="bash")
 
 
-# ==========================================
-# TAB 3: ALL 30 CASES EXPLORER
-# ==========================================
+
 elif app_mode == "📚 All 30 Cases Explorer":
     st.subheader("📚 Complete Cisco Diagnostic Dataset (30 Active Scenarios)")
     st.markdown("Filter, search, inspect, and export all 30 test scenarios included in `data/cases.csv`:")
@@ -541,9 +535,7 @@ elif app_mode == "📚 All 30 Cases Explorer":
     )
 
 
-# ==========================================
-# TAB 4: SYSTEM ANALYTICS & AUDIT LOG
-# ==========================================
+
 elif app_mode == "📊 System Analytics & Audit Log":
     st.subheader("📊 System Benchmark Metrics & Real-Time Audit Log")
     
@@ -591,9 +583,7 @@ elif app_mode == "📊 System Analytics & Audit Log":
     st.dataframe(audit_df, use_container_width=True, height=280)
 
 
-# ==========================================
-# TAB 5: ARCHITECTURE & DOCUMENTATION
-# ==========================================
+
 elif app_mode == "🏗️ Architecture & Documentation":
     st.subheader("🏗️ System Architecture & Engineering Documentation")
     
