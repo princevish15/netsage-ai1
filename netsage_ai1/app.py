@@ -1,7 +1,4 @@
-"""
-NetSage AI: Automated Network Diagnostic Platform
-Streamlit Operations Dashboard (app.py)
-"""
+
 
 import streamlit as st
 import pandas as pd
@@ -332,7 +329,7 @@ if app_mode == "🔬 Diagnostic Workspace":
     if filtered_df.empty:
         st.warning("No cases match the selected filters. Please adjust your sidebar selection.")
     else:
-        # Case Selector Dropdown
+     
         case_options = [f"{row['case_id']} - {row['symptom']} ({row['osi_layer']})" for _, row in filtered_df.iterrows()]
         selected_case_str = st.selectbox("📌 Select Test Scenario to Diagnose:", case_options)
         
@@ -344,7 +341,7 @@ if app_mode == "🔬 Diagnostic Workspace":
         with col_left:
             st.markdown("#### 📡 Scenario Telemetry & Topology")
             
-            # Badges
+           
             sev_class = "badge-severity-high" if case_row["severity"] == "High" else ("badge-severity-med" if case_row["severity"] == "Medium" else "badge-severity-low")
             st.markdown(f"""
             <div style="margin-bottom: 12px;">
@@ -363,7 +360,7 @@ if app_mode == "🔬 Diagnostic Workspace":
                 <span>CISCO-IOS-TERMINAL // {case_row['case_id']}</span>
                 <span>STATUS: CAPTURED</span>
             </div>
-            <div class="terminal-box"># show outputs & diagnostics
+            <div class="terminal-box">
 {case_row['show_outputs']}</div>
             """, unsafe_allow_html=True)
 
